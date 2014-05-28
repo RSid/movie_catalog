@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Actors</title>
+  <link rel="stylesheet" href="movies.css" />
 </head>
 <body>
   <h1>Actor List</h1>
-  <ul>
+  <a href="/"><p>HOME</p></a>
+  <ul class="content-list">
     <% @actors.each do |actor| %>
       <li><a href= <%="actors/#{actor[1]}" %> > <%= actor[0] %></a></li>
     <% end %>

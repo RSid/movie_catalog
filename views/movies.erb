@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Movies</title>
+  <link rel="stylesheet" href="movies.css" />
 </head>
 <body>
   <h1>Movie List</h1>
-  <ul>
+  <a href="/"><p>HOME</p></a>
+  <ul class="content-list">
     <% @movies.each do |movie| %>
       <li><a href= <%= "/movies/#{movie[5]}" %> ><%= "#{movie[0]}," %></a> <%= "Year: #{movie[1]}, Rating: #{movie[2]}, Genre: #{movie[3]}, Studio: #{movie[4]}  " %></li>
     <% end %>
