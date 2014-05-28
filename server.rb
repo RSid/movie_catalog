@@ -22,9 +22,9 @@ def display_movies(order=' movies.title',offset=" 0",query="")
   end
 end
 
-def display_actors
+def display_actors(offset=" 0")
   db_connection do |conn|
-    actors=conn.exec('SELECT name,id FROM actors ORDER BY name;')
+    actors=conn.exec('SELECT name,id FROM actors ORDER BY name LIMIT 20 OFFSET'+offset+';')
     actors.values
   end
 end
@@ -48,18 +48,23 @@ get '/movies' do
   @query=params[:query]
 
   if @order != nil && (@order=='year' || @order=='rating')
-    @movies=display_movies(' movies.'+@order,' '+@page.to_s)
+    @movies=display_movies(' movies.'+@order,' '+(@page*20).to_s)
   elsif @query != nil
-    @movies=display_movies(' movies.title',' ' + @page.to_s, ' WHERE movies.title LIKE ' + "'%"+@query+"%'")
+    @movies=display_movies(' movies.title',' ' + (@page*20).to_s, ' WHERE movies.title ILIKE ' + "'%"+@query+"%'")
   else
-    @movies=display_movies(' movies.title',' '+@page.to_s)
+    @movies=display_movies(' movies.title',' '+(@page*20).to_s)
   end
 
   erb :movies
 end
 
 get '/actors' do
-  @actors=display_actors
+
+  @page=params[:page].to_i
+  @query=params[:query]
+
+  @actors=display_actors(' '+@page.to_s)
+
   erb :actors
 end
 

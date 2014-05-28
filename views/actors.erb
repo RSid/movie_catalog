@@ -8,11 +8,22 @@
 <body>
   <h1>Actor List</h1>
   <a href="/"><p>HOME</p></a>
+
+    <form action="/actors" method="get">
+        <label for="query">Search: </label>
+        <input type="text" name="query" id="query" />
+
+        <input type="submit" value="Search" />
+    </form>
+
   <ul class="content-list">
     <% @actors.each do |actor| %>
       <li><a href= <%="actors/#{actor[1]}" %> > <%= actor[0] %></a></li>
     <% end %>
   </ul>
+
+  <a href= <%= "/actors?page=#{(@page-1)>-1? @page-1: @page}" %> > Previous 20 Results </a>
+    | <a href= <%= "/actors?page=#{ @page+1 }" %> > Next 20 Results </a>
 
 </body>
 </html>
