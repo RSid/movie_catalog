@@ -14,9 +14,10 @@ def db_connection
   end
 end
 
-def display_movies
+def display_movies(order=' movies.title')
+  selector='SELECT movies.title, movies.year,movies.rating,genres.name,studios.name,movies.id FROM movies JOIN genres ON movies.genre_id=genres.id JOIN studios ON movies.studio_id=studios.id ORDER BY'+order+';'
   db_connection do |conn|
-    movies=conn.exec('SELECT movies.title, movies.year,movies.rating,genres.name,studios.name,movies.id FROM movies JOIN genres ON movies.genre_id=genres.id JOIN studios ON movies.studio_id=studios.id ORDER BY movies.title;')
+    movies=conn.exec(selector)
     movies.values
   end
 end
@@ -41,7 +42,15 @@ get '/' do
 end
 
 get '/movies' do
-  @movies=display_movies
+
+  @order=params[:order]
+
+  if @order != nil && (@order=='year' || @order=='rating')
+    @movies=display_movies(' movies.'+@order)
+  else
+    @movies=display_movies
+  end
+
   erb :movies
 end
 
