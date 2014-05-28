@@ -6,8 +6,6 @@
   <link rel="stylesheet" href="movies.css" />
 </head>
 <body>
-
-<%= @bee %>
   <h1>Movie List</h1>
   <a href="/"><p>HOME</p></a>
   <ul class="content-list">
@@ -15,6 +13,12 @@
       <li><a href= <%= "/movies/#{movie[5]}" %> ><%= "#{movie[0]}," %></a> <%= "Year: #{movie[1]}, Rating: #{movie[2]}, Genre: #{movie[3]}, Studio: #{movie[4]}  " %></li>
     <% end %>
   </ul>
+
+  <a href= <%= "/movies?page=#{(@page-1)>-1? @page-1: @page}" %> > Previous 20 Results </a>
+    | <a href= <%= "/movies?page=#{ @page+1 }" %> > Next 20 Results </a>
+
+<!-- Don't think I have a plan for when you try to go to next 20
+from end of movies list, not sure I need one with offset. -->
 
 </body>
 </html>
