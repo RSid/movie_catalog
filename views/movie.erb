@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie</title>
+</head>
+<body>
+
+    <% @movies.each do |movie| %>
+      <% if @id==movie[-1] %>
+        <h1><%=movie[0]%></h1>
+        <ul>
+          <li>
+            <%= "Year: #{movie[1]}, Rating: #{movie[2]}, Genre: #{movie[3]}, Studio: #{movie[4]}" %>
+          </li>
+        </ul>
+      <% end %>
+    <% end %>
+
+<h3>Cast</h3>
+
+  <ul>
+    <% @casting_details.each do |cast| %>
+      <% if @id==cast[-1] %>
+        <li> <a href= <%= "/actors/#{cast[1]}"%> > <%= cast[0] %> </a><%= "as #{cast[2]}"%> </li>
+      <% end %>
+    <% end %>
+  </ul>
+
+</body>
+</html>

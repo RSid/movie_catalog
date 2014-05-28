@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Actor</title>
+</head>
+<body>
+
+    <% @actors.each do |actor| %>
+      <% if @id==actor[1] %>
+        <h1><%=actor[0]%></h1>
+      <% end %>
+    <% end %>
+
+    <% @casting_details.each do |role| %>
+      <% if @id==role[1] %>
+        <ul>
+          <li><%= "Starred in" %>
+          <% @movies.each do |movie| %>
+            <% if movie[0]==role[3] %>
+                <a href= <%="/movies/#{role[4]}" %> > <!-- Adam Sandler's 'Deuce bigalow: male gigalo' ruins this test! I suspect it's the colon in the title, as a href # works fine. Damn you, deuce bigalo. -->
+            <% end %>
+          <% end %>
+          <%= "#{role[3]}" %> </a> <%="as #{role[2]}" %></li>
+
+          </ul>
+      <% end %>
+    <% end %>
+
+</body>
+</html>
