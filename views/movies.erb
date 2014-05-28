@@ -8,6 +8,14 @@
 <body>
   <h1>Movie List</h1>
   <a href="/"><p>HOME</p></a>
+
+    <form action="/movies" method="get">
+        <label for="query">Search: </label>
+        <input type="text" name="query" id="query" />
+
+        <input type="submit" value="Search" />
+    </form>
+
   <ul class="content-list">
     <% @movies.each do |movie| %>
       <li><a href= <%= "/movies/#{movie[5]}" %> ><%= "#{movie[0]}," %></a> <%= "Year: #{movie[1]}, Rating: #{movie[2]}, Genre: #{movie[3]}, Studio: #{movie[4]}  " %></li>

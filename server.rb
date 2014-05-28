@@ -14,8 +14,8 @@ def db_connection
   end
 end
 
-def display_movies(order=' movies.title',offset=" 0")
-  selector='SELECT movies.title, movies.year,movies.rating,genres.name,studios.name,movies.id FROM movies JOIN genres ON movies.genre_id=genres.id JOIN studios ON movies.studio_id=studios.id ORDER BY'+order+' LIMIT 20 OFFSET'+offset+';'
+def display_movies(order=' movies.title',offset=" 0",query="")
+  selector='SELECT movies.title, movies.year,movies.rating,genres.name,studios.name,movies.id FROM movies JOIN genres ON movies.genre_id=genres.id JOIN studios ON movies.studio_id=studios.id'+query+' ORDER BY'+order+' LIMIT 20 OFFSET'+offset+';'
   db_connection do |conn|
     movies=conn.exec(selector)
     movies.values
@@ -45,9 +45,12 @@ get '/movies' do
 
   @order=params[:order]
   @page=params[:page].to_i
+  @query=params[:query]
 
   if @order != nil && (@order=='year' || @order=='rating')
     @movies=display_movies(' movies.'+@order,' '+@page.to_s)
+  elsif @query != nil
+    @movies=display_movies(' movies.title',' ' + @page.to_s, ' WHERE movies.title LIKE ' + "'%"+@query+"%'")
   else
     @movies=display_movies(' movies.title',' '+@page.to_s)
   end
